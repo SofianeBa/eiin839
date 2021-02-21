@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 
-class Program
+class ExternalCaller
 {
-    static void Main()
+    public static string Main(HttpListenerRequest request)
     {
         //
         // Set up the process with the ProcessStartInfo class.
@@ -12,8 +13,8 @@ class Program
         //
         ProcessStartInfo start = new ProcessStartInfo();
         start.FileName = @"C:\Users\SofianeB\Desktop\Polytech\4A\Soc\TD2\ExecTest\bin\Debug\ExecTest.exe"; // Specify exe name.
-        start.Arguments = "Argument1"; // Specify arguments.
-        start.UseShellExecute = false; 
+        start.Arguments = request.Url.Query; // Specify arguments.
+        start.UseShellExecute = false;
         start.RedirectStandardOutput = true;
         //
         // Start the process.
@@ -25,9 +26,7 @@ class Program
             //
             using (StreamReader reader = process.StandardOutput)
             {
-                string result = reader.ReadToEnd();
-                Console.WriteLine(result);
-                Console.ReadLine();
+                return reader.ReadToEnd();
             }
         }
     }
