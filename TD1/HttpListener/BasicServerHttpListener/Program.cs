@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using ConsoleApp3;
 
 namespace BasicServerHTTPlistener
 {
@@ -56,6 +57,9 @@ namespace BasicServerHTTPlistener
                 // Note: The GetContext method blocks while waiting for a request.
                 HttpListenerContext context = listener.GetContext();
                 HttpListenerRequest request = context.Request;
+
+                HeaderServer headergetter = new HeaderServer(request);
+                Console.WriteLine(headergetter.ToString());
 
                 string documentContents;
                 using (Stream receiveStream = request.InputStream)
